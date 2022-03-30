@@ -1,4 +1,4 @@
-from constant import *
+from basic import *
 
 class Move(object):
     def __init__(self, color, x, y):

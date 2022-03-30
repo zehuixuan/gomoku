@@ -1,20 +1,8 @@
 from move import Move
-from constant import *
+from basic import *
 import random
 import numpy as np
 import copy
-
-# hashTable = []
-# random.seed(42)
-# for k in range (3):
-#     l = []
-#     for i in range (Dx):
-#         l1 = []
-#         for j in range (Dy):
-#             l1.append (random.randint (0, 2 ** 64))
-#         l.append (l1)
-#     hashTable.append (l)
-# hashTurn = random.randint (0, 2 ** 64)
 
 class Board(object):
     def __init__(self):
@@ -73,19 +61,15 @@ class Board(object):
         return (False, -1.0)
 
     def play (self, move):
-        # col = int (self.board [move.x2] [move.y2])
-        # if col != Empty:
-        #     self.h = self.h ^ hashTable [col] [move.x2] [move.y2]
-        # self.h = self.h ^ hashTable [move.color] [move.x2] [move.y2]
-        # self.h = self.h ^ hashTable [move.color] [move.x1] [move.y1]
-        # self.h = self.h ^ hashTurn
+        self.h = self.h ^ hashTable [move.color] [move.x] [move.y]
+        self.h = self.h ^ hashTurn
         self.board [move.x] [move.y] = move.color
         if (move.color == White):
             self.turn = Black
         else:
             self.turn = White
 
-    def playout (self):
+    def playout(self):
         while (True):
             moves = self.legalMoves ()
             if self.terminal ():

@@ -38,26 +38,29 @@ class Board(object):
     def existFive(self):
         for i in range(0, Dx):
             for j in range(0, Dy-4):
-                if (self.board[i, j:(j+5)] == White*np.ones((1,5))).all():
-                    return (True, 1.0)
-                if (self.board[i, j:(j+5)] == Black*np.ones((1,5))).all():
-                    return (True, 0.0)
+                if self.board[i][j] != 0:
+                    if (self.board[i, j:(j+5)] == White*np.ones((1,5))).all():
+                        return (True, 1.0)
+                    if (self.board[i, j:(j+5)] == Black*np.ones((1,5))).all():
+                        return (True, 0.0)
         for i in range(0, Dx-4):
             for j in range(0, Dy):
-                if (self.board[i:(i+5), j] == White*np.ones((5,1))).all():
-                    return (True, 1.0)
-                if (self.board[i:(i+5), j] == Black*np.ones((5,1))).all():
-                    return (True, 0.0)
+                if self.board[i][j] != 0:
+                    if (self.board[i:(i+5), j] == White*np.ones((5,1))).all():
+                        return (True, 1.0)
+                    if (self.board[i:(i+5), j] == Black*np.ones((5,1))).all():
+                        return (True, 0.0)
         for i in range(0, Dx-4):
             for j in range(0, Dy-4):
-                if (self.board[i:(i+5), j:(j+5)].diagonal() == White*np.ones((1,5))).all():
-                    return (True, 1.0)
-                if (self.board[i:(i+5), j:(j+5)].diagonal() == Black*np.ones((1,5))).all():
-                    return (True, 0.0)
-                if (np.fliplr(self.board[i:(i+5), j:(j+5)]).diagonal() == White*np.ones((1,5))).all():
-                    return (True, 1.0)
-                if (np.fliplr(self.board[i:(i+5), j:(j+5)]).diagonal() == Black*np.ones((1,5))).all():
-                    return (True, 0.0)
+                if self.board[i][j] != 0:
+                    if (self.board[i:(i+5), j:(j+5)].diagonal() == White*np.ones((1,5))).all():
+                        return (True, 1.0)
+                    if (self.board[i:(i+5), j:(j+5)].diagonal() == Black*np.ones((1,5))).all():
+                        return (True, 0.0)
+                    if (np.fliplr(self.board[i:(i+5), j:(j+5)]).diagonal() == White*np.ones((1,5))).all():
+                        return (True, 1.0)
+                    if (np.fliplr(self.board[i:(i+5), j:(j+5)]).diagonal() == Black*np.ones((1,5))).all():
+                        return (True, 0.0)
         return (False, -1.0)
 
     def play (self, move):

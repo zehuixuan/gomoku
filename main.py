@@ -33,16 +33,6 @@ import datetime
 #         print('the winner is: ')
 #         print(board.score())
 
-# test time of one step
-board = Board()
-starttime = datetime.datetime.now()
-if board.turn == White:
-    m_flat = flat(board,100)
-    board.play(m_flat)
-else:
-    m_ucb = UCB(board,100)
-    board.play(m_ucb)
-endtime = datetime.datetime.now()
-print(endtime-starttime).seconds
+
 
 

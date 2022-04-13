@@ -7,23 +7,17 @@ from flatMC import flat
 from ucb import UCB
 
 # %%
-# test time of one step
+# test time of one step of UCB
 starttime = datetime.datetime.now()
 board = Board()
-if board.turn == White:
-    m_flat = UCB(board,100)
-    board.play(m_flat)
-else:
-    m_ucb = UCB(board,100)
-    board.play(m_ucb)
-# for i in range(50):
-#     board = Board()
-#     board.playout()
+m_flat = UCB(board,1000)
+board.play(m_flat)
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)
+# 106 seconds
 
 # %%
-# test accuracy
+# test if it can detect the Five
 board = Board()
 board.play(Move(Black,7,7))
 board.existFive()
@@ -65,4 +59,13 @@ board.play(Move(Black,5,4))
 board.existFive()
 board.play(Move(White,10,9))
 board.existFive()
+
+# %% test time of 1000 random games
+starttime = datetime.datetime.now()
+for t in range(1000):
+    board = Board()
+    board.playout()
+endtime = datetime.datetime.now()
+print((endtime-starttime).seconds)
+# 97 seconds
 # %%

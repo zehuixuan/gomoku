@@ -66,13 +66,13 @@ class Board(object):
             check_diag2 = check_area[::-1,:].diagonal()
 
             for i in range(0,5):
-                if (check_row[i:(i+5)] == color*np.ones(5)).all:
+                if (check_row[i:(i+5)] == color*np.ones(5)).all():
                     return (True, win_num)
-                if (check_col[i:(i+5)] == color*np.ones(5)).all:
+                if (check_col[i:(i+5)] == color*np.ones(5)).all():
                     return (True, win_num)
-                if (check_diag1[i:(i+5)] == color*np.ones(5)).all:
+                if (check_diag1[i:(i+5)] == color*np.ones(5)).all():
                     return (True, win_num)
-                if (check_diag2[i:(i+5)] == color*np.ones(5)).all:
+                if (check_diag2[i:(i+5)] == color*np.ones(5)).all():
                     return (True, win_num)
         return (False, -1.0)
 

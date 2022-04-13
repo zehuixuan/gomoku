@@ -16,23 +16,26 @@ import datetime
 # White : flat Monte Carlo
 # Black : UCB
 
-# board = Board()
-# terminal = False
-# count = 0
-# while not terminal:
-#     count = count +1
-#     print(count)
-#     if board.turn == White:
-#         m_flat = flat(board,100)
-#         board.play(m_flat)
-#     else:
-#         m_ucb = UCB(board,100)
-#         board.play(m_ucb)
-#     terminal = board.terminal()
-#     if terminal:
-#         print('the winner is: ')
-#         print(board.score())
+# %%
+board = Board()
+terminal = False
+count = 0
+while not terminal:
+    count = count +1
+    print(count)
+    if board.turn == White:
+        m_flat = flat(board,100)
+        board.play(m_flat)
+    else:
+        m_ucb = UCB(board,100)
+        board.play(m_ucb)
+    terminal = board.terminal()
+    if terminal:
+        print('the winner is: ')
+        print(board.score())
 
 
 
 
+
+# %%

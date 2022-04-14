@@ -6,13 +6,22 @@ from basic import *
 from flatMC import *
 from ucb import *
 from uct import *
+from rave import *
 
-# %%
-# test time of one step of UCB
+# %% test time of 1000 random games
+starttime = datetime.datetime.now()
+for t in range(1000):
+    board = Board()
+    board.playout()
+endtime = datetime.datetime.now()
+print((endtime-starttime).seconds)
+# 97 seconds
+
+# %% test time of one step of UCB
 starttime = datetime.datetime.now()
 board = Board()
-m_flat = UCB(board,10000)
-board.play(m_flat)
+move = UCB(board,10000)
+board.play(move)
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)
 # n = 1000, 106 seconds
@@ -62,11 +71,21 @@ board.existFive()
 board.play(Move(White,10,9))
 board.existFive()
 
-# %% test time of 1000 random games
+# %% test time of one step with UCT
 starttime = datetime.datetime.now()
-for t in range(1000):
-    board = Board()
-    board.playout()
+board = Board()
+move = BestMoveUCT(board,1000)
+board.play(move)
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)
-# 97 seconds
+# n = 1000, 126 seconds
+
+# %% test time of one step with Rave
+starttime = datetime.datetime.now()
+board = Board()
+move = BestMoveRAVE(board,10000)
+board.play(move)
+endtime = datetime.datetime.now()
+print((endtime-starttime).seconds)
+
+# %%

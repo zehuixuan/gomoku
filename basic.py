@@ -7,7 +7,7 @@ White = 1
 Black = 2
 
 MaxLegalMoves = Dx * Dy
-Table = {}
+MaxCodeLegalMoves = 2 * Dx * Dy
 
 hashTable = []
 random.seed(42)
@@ -20,11 +20,3 @@ for k in range (3):
         l.append (l1)
     hashTable.append (l)
 hashTurn = random.randint (0, 2 ** 64)
-
-def add (board):
-    nplayouts = [0.0 for x in range (MaxLegalMoves)]
-    nwins = [0.0 for x in range (MaxLegalMoves)]
-    Table[board.h] = [0, nplayouts, nwins]
-
-def look (board):
-    return Table.get(board.h, None)

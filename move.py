@@ -13,19 +13,8 @@ class Move(object):
             return True
         return False
 
-    # def code (self, board):
-        # direction = 0
-        # if self.y2 > self.y1:
-        #     if board.board [self.x2] [self.y2] == Empty:
-        #         direction = 1
-        #     else:
-        #         direction = 2
-        # if self.y2 < self.y1:
-        #     if board.board [self.x2] [self.y2] == Empty:
-        #         direction = 3
-        #     else:
-        #         direction = 4
-        # if self.color == White:
-        #     return 5 * (Dy * self.x1 + self.y1) + direction
-        # else:
-        #     return 5 * Dx * Dy + 5 * (Dy * self.x1 + self.y1) + direction
+    def code (self):
+        if self.color == White:
+            return (Dy * self.x + self.y)
+        else:
+            return Dx * Dy + (Dy * self.x + self.y)

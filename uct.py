@@ -3,11 +3,23 @@ from math import sqrt
 from math import log
 import copy
 
+Table = {}
+
+def add (board):
+    nplayouts = [0.0 for x in range (MaxLegalMoves)]
+    nwins = [0.0 for x in range (MaxLegalMoves)]
+    Table[board.h] = [0, nplayouts, nwins]
+
+def look (board):
+    return Table.get(board.h, None)
+
 def UCT (board):
     if board.terminal():
         return board.score ()
+    # SimTree
     t = look (board)
     if t != None:
+        # SelectMove
         bestValue = -1000000.0
         best = 0
         moves = board.legalMoves ()
@@ -21,6 +33,7 @@ def UCT (board):
             if val > bestValue:
                 bestValue = val
                 best = i
+        # End of SelectMove
         board.play (moves [best])
         res = UCT (board)
         t [0] += 1
@@ -30,6 +43,7 @@ def UCT (board):
     else:
         add (board)
         return board.playout ()
+    # End of SimTree
 
 def BestMoveUCT (board, n):
     global Table

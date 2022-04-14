@@ -10,11 +10,12 @@ from ucb import UCB
 # test time of one step of UCB
 starttime = datetime.datetime.now()
 board = Board()
-m_flat = UCB(board,1000)
+m_flat = UCB(board,10000)
 board.play(m_flat)
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)
-# 106 seconds
+# n = 1000, 106 seconds
+# n = 10000, 1034 seconds
 
 # %%
 # test if it can detect the Five

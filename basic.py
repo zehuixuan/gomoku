@@ -24,7 +24,7 @@ hashTurn = random.randint (0, 2 ** 64)
 def add (board):
     nplayouts = [0.0 for x in range (MaxLegalMoves)]
     nwins = [0.0 for x in range (MaxLegalMoves)]
-    Table [board.h] = [0, nplayouts, nwins]
+    Table[board.h] = [0, nplayouts, nwins]
 
 def look (board):
     return Table.get(board.h, None)

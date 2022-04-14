@@ -2,7 +2,6 @@ from move import Move
 from basic import *
 import random
 import numpy as np
-import copy
 
 class Board(object):
     def __init__(self):

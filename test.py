@@ -3,8 +3,9 @@ from board import Board
 from move import Move
 import datetime
 from basic import *
-from flatMC import flat
-from ucb import UCB
+from flatMC import *
+from ucb import *
+from uct import *
 
 # %%
 # test time of one step of UCB
@@ -69,4 +70,3 @@ for t in range(1000):
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)
 # 97 seconds
-# %%

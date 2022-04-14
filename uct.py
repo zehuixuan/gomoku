@@ -1,9 +1,10 @@
 from basic import *
 from math import sqrt
 from math import log
+import copy
 
 def UCT (board):
-    if board.terminal ():
+    if board.terminal():
         return board.score ()
     t = look (board)
     if t != None:
@@ -29,3 +30,19 @@ def UCT (board):
     else:
         add (board)
         return board.playout ()
+
+def BestMoveUCT (board, n):
+    global Table
+    Table.clear()
+    for i in range (n):
+        b1 = copy.deepcopy(board)
+        res = UCT(b1)
+    t = look (board)
+    moves = board.legalMoves ()
+    best = moves [0]
+    bestValue = t [1] [0]
+    for i in range (1, len(moves)):
+        if (t [1] [i] > bestValue):
+            bestValue = t [1] [i]
+            best = moves [i]
+    return best

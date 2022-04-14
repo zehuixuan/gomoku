@@ -1,3 +1,8 @@
 
 gomoku_from_bobschuang.py
 test_uct.py
+test_Table2.py
+test_Table.py
+test_Table1.py
+__pycache__/test_Table1.cpython-38.pyc
+__pycache__/test_Table2.cpython-38.pyc

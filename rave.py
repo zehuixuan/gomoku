@@ -1,47 +1,13 @@
 from basic import *
 import copy
 
+
 Table={}
-
-def add (board):
-    nplayouts = [0.0 for x in range (MaxLegalMoves)]
-    nwins = [0.0 for x in range (MaxLegalMoves)]
-    Table[board.h] = [0, nplayouts, nwins]
-
-def look (board):
-    return Table.get(board.h, None)
-
-def playoutAMAF (board, played):
-    while (True):
-        moves = board.legalMoves()
-        if len (moves) == 0 or board.terminal ():
-            return board.score ()
-        n = random.randint (0, len (moves) - 1)
-        played.append (moves[n].code())
-        board.play (moves [n])
-    
-def addAMAF (board):
-    nplayouts = [0.0 for x in range (MaxLegalMoves)]
-    nwins = [0.0 for x in range (MaxLegalMoves)]
-    nplayoutsAMAF = [0.0 for x in range (MaxCodeLegalMoves)]
-    nwinsAMAF = [0.0 for x in range (MaxCodeLegalMoves)]
-    Table[board.h] = [0, nplayouts, nwins, nplayoutsAMAF, nwinsAMAF]
-
-def updateAMAF (t, played, res):
-    for i in range (len (played)):
-        code = played [i]
-        seen = False
-        for j in range (i):
-            if played [j] == code:
-                seen = True
-        if not seen:
-            t [3] [code] += 1
-            t [4] [code] += res
 
 def RAVE (board, played):
     if (board.terminal ()):
         return board.score ()
-    t = look (board)
+    t = look (board, Table)
     if t != None:
         bestValue = -1000000.0
         best = 0
@@ -74,16 +40,16 @@ def RAVE (board, played):
         updateAMAF (t, played, res)
         return res
     else:
-        addAMAF (board)
+        addAMAF (board, Table)
         return playoutAMAF (board, played)
 
 def BestMoveRAVE (board, n):
     global Table
-    Table = {}
+    Table.clear()
     for i in range (n):
         b1 = copy.deepcopy (board)
         res = RAVE (b1, [])
-    t = look (board)
+    t = look (board, Table)
     moves = board.legalMoves ()
     best = moves [0]
     bestValue = t [1] [0]

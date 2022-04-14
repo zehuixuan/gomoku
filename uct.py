@@ -5,19 +5,11 @@ import copy
 
 Table = {}
 
-def add (board):
-    nplayouts = [0.0 for x in range (MaxLegalMoves)]
-    nwins = [0.0 for x in range (MaxLegalMoves)]
-    Table[board.h] = [0, nplayouts, nwins]
-
-def look (board):
-    return Table.get(board.h, None)
-
 def UCT (board):
     if board.terminal():
         return board.score ()
     # SimTree
-    t = look (board)
+    t = look (board, Table)
     if t != None:
         # SelectMove
         bestValue = -1000000.0
@@ -41,7 +33,7 @@ def UCT (board):
         t [2] [best] += res
         return res
     else:
-        add (board)
+        add(board, Table)
         return board.playout ()
     # End of SimTree
 
@@ -51,7 +43,7 @@ def BestMoveUCT (board, n):
     for i in range (n):
         b1 = copy.deepcopy(board)
         res = UCT(b1)
-    t = look (board)
+    t = look (board, Table)
     moves = board.legalMoves ()
     best = moves [0]
     bestValue = t [1] [0]

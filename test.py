@@ -1,12 +1,12 @@
 # %%
-from board import Board
+from board import *
 from move import Move
 import datetime
 from basic import *
-from flatMC import *
-from ucb import *
-from uct import *
-from rave import *
+from flatMC import flat
+from ucb import UCB
+from uct import BestMoveUCT
+from rave import BestMoveRAVE
 
 # %% test time of 1000 random games
 starttime = datetime.datetime.now()
@@ -83,7 +83,7 @@ print((endtime-starttime).seconds)
 # %% test time of one step with Rave
 starttime = datetime.datetime.now()
 board = Board()
-move = BestMoveRAVE(board,10000)
+move = BestMoveRAVE(board,1000)
 board.play(move)
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)

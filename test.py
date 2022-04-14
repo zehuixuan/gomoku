@@ -7,6 +7,7 @@ from flatMC import flat
 from ucb import UCB
 from uct import BestMoveUCT
 from rave import BestMoveRAVE
+from grave import BestMoveGRAVE
 
 # %% test time of 1000 random games
 starttime = datetime.datetime.now()
@@ -88,4 +89,11 @@ board.play(move)
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)
 
+# %%
+starttime = datetime.datetime.now()
+board = Board()
+move = BestMoveGRAVE(board,10)
+board.play(move)
+endtime = datetime.datetime.now()
+print((endtime-starttime).seconds)
 # %%

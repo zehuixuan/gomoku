@@ -208,9 +208,9 @@ class Board(object):
     def misereScore (self):
         s = self.score ()
         if s == 1:
-            return -1
-        if s == 0:
             return 1
+        if s == 0:
+            return -1
         if s == -1: # not finished
             return -100
         return s

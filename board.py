@@ -2,6 +2,7 @@ from move import Move
 from basic import *
 import random
 import numpy as np
+import copy
 
 hashTable = []
 random.seed(42)
@@ -50,40 +51,42 @@ class Board(object):
     # existFive version 4
     def existFive(self):
         if self.lastMove != None:
-            check_area = np.zeros((9,9))
+            dimCheck = 2*numPiece-1
+            check_area = np.zeros((dimCheck, dimCheck))
             x = self.lastMove.x
             y = self.lastMove.y
             color = self.lastMove.color
+            middle = numPiece-1
 
             if color == White:
                 win_num = 1.0
             if color == Black:
                 win_num = 0.0
 
-            x_min = max([x-4,0])
-            y_min = max([y-4,0])
-            x_max = min([x+4,Dx-1])
-            y_max = min([y+4,Dy-1])
+            x_min = max([x-middle,0])
+            y_min = max([y-middle,0])
+            x_max = min([x+middle,Dx-1])
+            y_max = min([y+middle,Dy-1])
 
-            x_begin = max([4-x,0])
-            y_begin = max([4-y,0])
-            x_end = min([Dx-x+3,8])
-            y_end = min([Dy-y+3,8])
+            x_begin = max([middle-x,0])
+            y_begin = max([middle-y,0])
+            x_end = min([Dx-x+middle-1,dimCheck-1])
+            y_end = min([Dy-y+middle-1,dimCheck-1])
             
             check_area[x_begin:x_end+1,y_begin:y_end+1] = self.board[x_min:x_max+1,y_min:y_max+1].copy()
-            check_row = check_area[4,:]
-            check_col = check_area[:,4]
+            check_row = check_area[middle,:]
+            check_col = check_area[:,middle]
             check_diag1 = check_area.diagonal()
             check_diag2 = check_area[::-1,:].diagonal()
 
-            for i in range(0,5):
-                if (check_row[i:(i+5)] == color*np.ones(5)).all():
+            for i in range(0,numPiece):
+                if (check_row[i:(i+numPiece)] == color*np.ones(numPiece)).all():
                     return (True, win_num)
-                if (check_col[i:(i+5)] == color*np.ones(5)).all():
+                if (check_col[i:(i+numPiece)] == color*np.ones(numPiece)).all():
                     return (True, win_num)
-                if (check_diag1[i:(i+5)] == color*np.ones(5)).all():
+                if (check_diag1[i:(i+numPiece)] == color*np.ones(numPiece)).all():
                     return (True, win_num)
-                if (check_diag2[i:(i+5)] == color*np.ones(5)).all():
+                if (check_diag2[i:(i+numPiece)] == color*np.ones(numPiece)).all():
                     return (True, win_num)
         return (False, -1.0)
 
@@ -194,7 +197,7 @@ class Board(object):
         else:
             self.turn = White
 
-    def playout(self):
+    def playout (self):
         while (True):
             moves = self.legalMoves ()
             if self.terminal ():
@@ -202,38 +205,40 @@ class Board(object):
             n = random.randint (0, len (moves) - 1)
             self.play (moves [n])
 
-    # def misereScore (self):
-    #     s = self.score ()
-    #     if s == 1:
-    #         return -1
-    #     if s == 0:
-    #         return 1
-    #     return s
-    #
-    # def discountedPlayout (self, t):
-    #     while (True):
-    #         moves = self.legalMoves ()
-    #         if self.terminal ():
-    #             return self.misereScore () / (t + 1)
-    #         n = random.randint (0, len (moves) - 1)
-    #         self.play (moves [n])
-    #         t = t + 1
-    #
-    # def nestedDiscountedPlayout (self, t):
-    #     while (True):
-    #         if self.terminal ():
-    #             return self.misereScore () / (t + 1)
-    #         moves = self.legalMoves ()
-    #         bestMove = moves [0]
-    #         best = -2
-    #         for i in range (len (moves)):
-    #             b = copy.deepcopy (self)
-    #             b.play (moves [i])
-    #             s = b.discountedPlayout (t)
-    #             if self.turn == Black:
-    #                 s = -s
-    #             if s > best:
-    #                 best = s
-    #                 bestMove = moves [i]
-    #         self.play (bestMove)
-    #         t = t + 1
+    def misereScore (self):
+        s = self.score ()
+        if s == 1:
+            return -1
+        if s == 0:
+            return 1
+        if s == -1: # not finished
+            return -100
+        return s
+    
+    def discountedPlayout(self, t):
+        while(True):
+            moves = self.legalMoves ()
+            if self.terminal ():
+                return self.misereScore () / (t + 1)
+            n = random.randint (0, len (moves) - 1)
+            self.play (moves [n])
+            t = t + 1
+    
+    def nestedDiscountedPlayout (self, t):
+        while (True):
+            if self.terminal ():
+                return self.misereScore () / (t + 1)
+            moves = self.legalMoves ()
+            bestMove = moves [0]
+            best = -2
+            for i in range (len (moves)):
+                b = copy.deepcopy (self)
+                b.play (moves [i])
+                s = b.discountedPlayout (t)
+                if self.turn == Black:
+                    s = -s
+                if s > best:
+                    best = s
+                    bestMove = moves [i]
+            self.play (bestMove)
+            t = t + 1

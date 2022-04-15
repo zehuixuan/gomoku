@@ -5,6 +5,7 @@ Dy = 15
 Empty = 0
 White = 1
 Black = 2
+numPiece = 5
 
 MaxLegalMoves = Dx * Dy
 MaxCodeLegalMoves = 2 * Dx * Dy

@@ -1,7 +1,7 @@
 import random
 
-Dx = 15
-Dy = 15
+Dx = 9
+Dy = 9
 Empty = 0
 White = 1
 Black = 2

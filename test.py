@@ -109,10 +109,10 @@ print(all/100)
 # %%
 starttime = datetime.datetime.now()
 board = Board()
-move = BestMoveUCTNested(board,1000)
+move = BestMoveUCTNested(board,100)
 board.play(move)
 endtime = datetime.datetime.now()
 print((endtime-starttime).seconds)
 
-# for n = 1000, 
+# for n = 100, 
 # %%

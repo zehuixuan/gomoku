@@ -6,6 +6,9 @@ import copy
 
 hashTable = []
 random.seed(42)
+
+# totalGame = 0
+
 for k in range (3):
     l = []
     for i in range (Dx):
@@ -216,6 +219,9 @@ class Board(object):
         return s
     
     def discountedPlayout(self, t):
+        # global totalGame
+        # totalGame += 1
+        # print('totalGame: '+str(totalGame))
         while(True):
             moves = self.legalMoves ()
             if self.terminal ():
